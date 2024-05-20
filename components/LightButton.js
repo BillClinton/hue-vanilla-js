@@ -26,10 +26,12 @@ export default class LightButton extends HTMLElement {
 
   render() {
     const button = this.root.querySelector('button');
+    const picker = this.root.querySelector('input[type=color]');
     const name = this.getAttribute('lightName');
     const state = JSON.parse(this.getAttribute('lightState'));
 
     button.innerText = name + ' : ' + (state.on ? 'on' : 'off');
+    picker.value = this.getAttribute('lightColor');
   }
 }
 
