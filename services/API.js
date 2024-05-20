@@ -6,7 +6,6 @@ const API = {
   fetchLights: async () => {
     const result = await fetch(`${API.domain}/api/${API.token}${API.path}`);
     const response = await result.json();
-    console.log(response);
     if (response[0]?.error) {
       console.warn(
         `error communicating with Hue bridge: ${response[0].error.description}`
