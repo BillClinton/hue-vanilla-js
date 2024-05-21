@@ -7,26 +7,68 @@
 
     <script src="app.js" defer type="module"></script>
   </head>
+  <style>
+    light-button {
+      background-color: #fff;
+    }
+  </style>
   <body>
-    <h3>lights</h3>
     <button-panel></button-panel>
 
     <template id="light-button-template">
       <style>
+        .wrapper {
+          background-color: inherit;
+          display: grid;
+          grid-template-columns: 8fr 4fr;
+          grid-gap: 12px;
+          align-items: center;
+          width: 80%;
+        }
         button {
-          background-color: #777;
-
+          background-color: #778;
           color: #fff;
           border: none;
-          padding: 10px 20px;
           font-size: 16px;
           border-radius: 5px;
           cursor: pointer;
+          height: 48px;
+          margin: 6px 0;
+          border: 6px solid #000000;
+        }
+        .picker {
+          -webkit-appearance: none;
+          -moz-appearance: none;
+          appearance: none;
+          background-color: transparent;
+          width: 60px;
+          height: 60px;
+          border: none;
+          cursor: pointer;
+          padding: 0;
+        }
+        .picker::-webkit-color-swatch {
+          border-radius: 50%;
+          border: 6px solid #000000;
+        }
+        .picker::-moz-color-swatch {
+          border-radius: 50%;
+          border: 6px solid #000000;
+        }
+        .picker:disabled {
+          cursor: not-allowed;
+          opacity: 0.25;
         }
       </style>
-      <p>
+      <p class="wrapper">
         <button>&nbsp;</button>
-        <input type="color" id="head" name="head" value="#e66465" />
+        <input
+          type="color"
+          id="head"
+          name="head"
+          value="#e66465"
+          class="picker"
+        />
       </p>
     </template>
     <template id="button-panel-template"></template>
