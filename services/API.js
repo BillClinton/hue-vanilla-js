@@ -12,6 +12,7 @@ const API = {
       console.warn(
         `error communicating with Hue bridge: ${response[0].error.description}`
       );
+      app.store.lights = {};
     } else {
       app.store.lights = response;
     }
