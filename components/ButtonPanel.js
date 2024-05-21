@@ -1,4 +1,4 @@
-import cieRgbColorConverter from 'https://cdn.skypack.dev/cie-rgb-color-converter';
+import { convertXYToRGB } from '../services/Util.js';
 
 export default class ButtonPanel extends HTMLElement {
   constructor() {
@@ -17,7 +17,9 @@ export default class ButtonPanel extends HTMLElement {
   }
 
   disconnectedCallback() {
-    window.removeEventListener('appdataloaded', this.handleAppDataLoaded);
+    window.removeEventListener('appdataloaded', () => {
+      this.render();
+    });
   }
 
   render() {
@@ -27,23 +29,17 @@ export default class ButtonPanel extends HTMLElement {
 
     for (const key in lights) {
       if (lights.hasOwnProperty(key)) {
+        const lightButton = document.createElement('light-button');
         const light = lights[key];
         const state = light.state;
+        const color = convertXYToRGB(state.xy[0], state.xy[1], state.bri);
 
-        const rgb = cieRgbColorConverter.xyBriToRgb(
-          state.xy[0],
-          state.xy[0],
-          state.bri
-        );
-
-        const lightButton = document.createElement('light-button');
         lightButton.setAttribute('lightID', key);
         lightButton.setAttribute('lightName', light.name);
+        lightButton.setAttribute('lightModelID', light.modelid);
         lightButton.setAttribute('lightState', JSON.stringify(light.state));
-        lightButton.setAttribute(
-          'lightColor',
-          `#${rgb.r.toString(16)}${rgb.g.toString(16)}${rgb.b.toString(16)}`
-        );
+        lightButton.setAttribute('lightColor', color);
+
         content.appendChild(lightButton);
       }
     }
