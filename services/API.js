@@ -18,6 +18,19 @@ const API = {
     }
   },
 
+  fetchRooms: async () => {
+    const result = await fetch(`${API.domain}/api/${API.token}/groups`);
+    const response = await result.json();
+    if (response[0]?.error) {
+      console.warn(
+        `error communicating with Hue bridge: ${response[0].error.description}`
+      );
+      app.store.rooms = {};
+    } else {
+      app.store.rooms = response;
+    }
+  },
+
   setOnState: async (lightID, on = true) => {
     const result = await fetch(
       `${API.domain}/api/${API.token}${API.path}/${lightID}/state`,

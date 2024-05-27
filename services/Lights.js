@@ -1,7 +1,7 @@
 import API from './API.js';
 
 export async function loadData() {
-  await API.fetchLights();
+  await Promise.all([API.fetchLights(), API.fetchRooms()]);
 }
 
 export async function setOnState(lightID, on = true) {
