@@ -16,8 +16,6 @@ export default class RoomsPanel extends HTMLElement {
     const content = template.content.cloneNode(true);
     const rooms = app.store.rooms;
 
-    console.log(rooms);
-
     if (rooms && Object.keys(rooms).length > 0) {
       for (const key in rooms) {
         if (rooms.hasOwnProperty(key)) {
@@ -25,7 +23,7 @@ export default class RoomsPanel extends HTMLElement {
           const lightButton = document.createElement('light-button');
 
           if (room.type === 'Room') {
-            console.log('room', room.name, room.type);
+            // console.log('room', room.name, room.type);
             const div = document.createElement('div');
             const h2 = document.createElement('h2');
             h2.innerText = room.name;
@@ -36,9 +34,10 @@ export default class RoomsPanel extends HTMLElement {
               for (const lightID of room.lights) {
                 const li = document.createElement('li');
                 const lightButton = document.createElement('light-button');
-                console.log('lightID', lightID);
-                console.log(app.store.getLight(lightID));
-                lightButton.setLight(app.store.getLight(lightID));
+                const light = app.store.getLight(lightID);
+
+                light.ID = lightID;
+                lightButton.setLight(light);
                 li.appendChild(lightButton);
                 ul.appendChild(li);
                 div.appendChild(ul);
